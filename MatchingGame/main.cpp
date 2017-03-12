@@ -1,28 +1,33 @@
-//#define DEBUG
+/*
+Program:MatchingGame
+Author:ChingYu-Chia
+Date:2017/03
+*/ 
 
+//#define DEBUG
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
 #include <string>
 using namespace std;
 
-void EstablishAnArray();
-bool TheGameEndAtFirstPrint();
-int  CanGameGoOn();
-int  GameOver();
-int  CheckInput(string);
-void PrintArray();
-bool CanTwoCoordinateBeRemoved(int, int, int, int);
-bool CheckLine(int, int, int, int);
-bool CheckCorner(int, int, int, int);
+void establishAnArray();
+bool theGameEndAtFirstPrint();
+int  canGameGoOn();
+int  gameOver();
+int  checkInput(string);
+void printArray();
+bool canTwoCoordinateBeRemoved(int, int, int, int);
+bool checkLine(int, int, int, int);
+bool checkCorner(int, int, int, int);
 
 int e=6;					//e=edge
 int arr2d[6][6];
 
 int main(int argc, char** argv) {
-	EstablishAnArray();	
+	establishAnArray();	
 	cout<<"Welcome to the game~"<<endl;
-	PrintArray();
+	printArray();
 	
 	int x1, x2, y1, y2;
 	int r1, r2, c1, c2;
@@ -30,35 +35,31 @@ int main(int argc, char** argv) {
 
 	while(game==1){
 		//輸入座標 
-		x1=CheckInput("請輸入第一組座標x值:");
-		y1=CheckInput("請輸入第一組座標y值:");
-		x2=CheckInput("請輸入第二組座標x值:");
-		y2=CheckInput("請輸入第二組座標y值:");
+		x1=checkInput("請輸入第一組座標x值:");
+		y1=checkInput("請輸入第一組座標y值:");
+		x2=checkInput("請輸入第二組座標x值:");
+		y2=checkInput("請輸入第二組座標y值:");
 		
 		//轉換成陣列欄位 
 		r1=x1-1, r2=x2-1, c1=y1-1, c2=y2-1;
 		
-		if(CanTwoCoordinateBeRemoved(r1,r2,c1,c2)){
-			if(CheckLine(r1,r2,c1,c2)){
-				arr2d[c1][r1]=0;
-				arr2d[c2][r2]=0;
-				cout<<"Successful Remove"<<endl;
-			}else if(CheckCorner(r1,r2,c1,c2)){
+		if(canTwoCoordinateBeRemoved(r1,r2,c1,c2)){
+			if(checkLine(r1,r2,c1,c2) || checkCorner(r1,r2,c1,c2)){
 				arr2d[c1][r1]=0;
 				arr2d[c2][r2]=0;
 				cout<<"Successful Remove"<<endl;
 			}else{
-				cout<<"超過兩個彎無法消除喔"<<endl; 
+				cout<<"中間有太多的障礙物無法消除喔~"<<endl; 
 			}
 		}
-		PrintArray();
-		game=GameOver();
+		printArray();
+		game=gameOver();
 	}
-
+	system("pause");
 	return 0;
 }
 
-void EstablishAnArray(){
+void establishAnArray(){
 	//建立一個陣列並打亂 
 	int arr[e*e];
 	for(int i=0; i<e*e; i++){
@@ -81,18 +82,18 @@ void EstablishAnArray(){
 				k+=1;
 			}
 		}
-	}while(TheGameEndAtFirstPrint());
+	}while(theGameEndAtFirstPrint());
 }
 
-bool TheGameEndAtFirstPrint(){
-	if(CanGameGoOn()==1){
+bool theGameEndAtFirstPrint(){
+	if(canGameGoOn()==1){
 		return false;
 	}else{
 		return true;
 	}
 }
 
-int CanGameGoOn(){
+int canGameGoOn(){
 	int A1[e*e], A2[e*e], B1[e*e], B2[e*e], endgame[e*e], wingame[e*e];
 	int r1, r2, c1, c2;
 	int k;
@@ -112,7 +113,7 @@ int CanGameGoOn(){
 	for(int l=1; l<=e*e/2; l++){
 		r1=A1[l], r2=A2[l], c1=B1[l], c2=B2[l];
 		if(r1!=99 && r2!=99 && c1!=99 && c2!=99){
-			if(CheckLine(r1,r2,c1,c2)){
+			if(checkLine(r1,r2,c1,c2)){
 				k=arr2d[c1][r1];
 				A1[k]=99, B1[k]=99;
 				A2[k]=99, B2[k]=99;
@@ -120,7 +121,7 @@ int CanGameGoOn(){
 				cout<<"l="<<l<<", CheckLine=1"<<endl;
 				#endif
 				return 1;
-			}else if(CheckCorner(r1,r2,c1,c2)){
+			}else if(checkCorner(r1,r2,c1,c2)){
 				k=arr2d[c1][r1];
 			 	A1[k]=99, B1[k]=99;
 				A2[k]=99, B2[k]=99;
@@ -146,17 +147,11 @@ int CanGameGoOn(){
 	  	if(wingame[l]!=1) game=0;
 	}
 	if(game==2){
-		#ifdef DEBUG
-		cout<<"game==2"<<endl;
-		#endif
 		return 2;
 	}else{
 		game=0;
 	}
 	if(game==0){
-		#ifdef DEBUG
-		cout<<"game==0"<<endl;
-		#endif
 		for(int l=1; l<=e*e/2; l++){
 		  	if(endgame[l]!=1) return 1;
 		}
@@ -164,19 +159,19 @@ int CanGameGoOn(){
 	return 0;
 }
 
-int GameOver(){
-	int a=CanGameGoOn();
+int gameOver(){
+	int a=canGameGoOn();
 	if(a==1){
 		return 1;
 	}else if(a==0){
-		cout<<"已經沒有成雙且可消掉的數字了，遊戲結束QWQ"<<endl;
+		cout<<"There is nothing to remove, game over QwQ"<<endl;
 	}else if(a==2){
 		cout<<"You win the game!!!"<<endl;
 	}
 	return 0;
 }
 
-void PrintArray(){
+void printArray(){
 	cout<<endl;
 	for(int i=0; i<e; i++){
 		for(int j=0; j<e; j++){
@@ -190,7 +185,7 @@ void PrintArray(){
 	}
 }
 
-int CheckInput(string requirement){
+int checkInput(string requirement){
 	int check=0;
 	string InputString;
 	float InputInt;
@@ -207,7 +202,7 @@ int CheckInput(string requirement){
 	}
 }
 
-bool CanTwoCoordinateBeRemoved(int r1, int r2, int c1, int c2){
+bool canTwoCoordinateBeRemoved(int r1, int r2, int c1, int c2){
 	if(arr2d[c1][r1]==0 || arr2d[c2][r2]==0){
 		cout<<"請勿重複輸入數字已被消掉的座標~"<<endl;
 		return false;
@@ -223,7 +218,7 @@ bool CanTwoCoordinateBeRemoved(int r1, int r2, int c1, int c2){
 }
 
 //兩數字相臨 or 在同一直線上 
-bool CheckLine(int r1, int r2, int c1, int c2){
+bool checkLine(int r1, int r2, int c1, int c2){
 	int checkline=0;
 	int m, n;
 	if(r1==r2 || c1==c2){
@@ -261,7 +256,7 @@ bool CheckLine(int r1, int r2, int c1, int c2){
 }
 
 //轉一個彎
-bool CheckCorner(int r1, int r2, int c1, int c2){
+bool checkCorner(int r1, int r2, int c1, int c2){
 	int crr=1, ccr=1, crl=1, ccl=1; 
 	int m, n;
 	if(r1!=r2 && c1!=c2){
