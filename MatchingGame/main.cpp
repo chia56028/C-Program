@@ -103,11 +103,11 @@ int canGameGoOn(){
 	for(int i=0; i<e; i++){
 	  	for(int j=0; j<e; j++){
 		    k=arr2d[j][i];
-		    if(A1[k]==99){
+			if(A1[k]==99){
           		B1[k]=j, A1[k]=i;
     		}else{
 	        	B2[k]=j, A2[k]=i;
-	        }
+	    	}
 	  	}
 	}
 	for(int l=1; l<=e*e/2; l++){
