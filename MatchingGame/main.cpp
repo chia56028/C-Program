@@ -16,8 +16,8 @@ bool CanTwoCoordinateBeRemoved(int, int, int, int);
 bool CheckLine(int, int, int, int);
 bool CheckCorner(int, int, int, int);
 
-int e=4;					//e=edge
-int arr2d[4][4];
+int e=6;					//e=edge
+int arr2d[6][6];
 
 int main(int argc, char** argv) {
 	EstablishAnArray();	
@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
 				arr2d[c2][r2]=0;
 				cout<<"Successful Remove"<<endl;
 			}else{
-				cout<<"無法消除喔"<<endl; 
+				cout<<"超過兩個彎無法消除喔"<<endl; 
 			}
 		}
 		PrintArray();
@@ -65,7 +65,7 @@ void EstablishAnArray(){
 		arr[i]=i%(e*e/2)+1;
 	}
 	do{
-		srand(3);
+		srand(time(NULL));
 		int m, n;
 		for(int i=0; i<e*e; i++){
 			m=rand()%e*e;
