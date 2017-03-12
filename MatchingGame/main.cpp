@@ -34,13 +34,13 @@ int main(int argc, char** argv) {
 	int game=1;
 
 	while(game==1){
-		//¿é¤J®y¼Ğ 
-		x1=checkInput("½Ğ¿é¤J²Ä¤@²Õ®y¼Ğx­È:");
-		y1=checkInput("½Ğ¿é¤J²Ä¤@²Õ®y¼Ğy­È:");
-		x2=checkInput("½Ğ¿é¤J²Ä¤G²Õ®y¼Ğx­È:");
-		y2=checkInput("½Ğ¿é¤J²Ä¤G²Õ®y¼Ğy­È:");
+		//è¼¸å…¥åº§æ¨™ 
+		x1=checkInput("è«‹è¼¸å…¥ç¬¬ä¸€çµ„åº§æ¨™xå€¼:");
+		y1=checkInput("è«‹è¼¸å…¥ç¬¬ä¸€çµ„åº§æ¨™yå€¼:");
+		x2=checkInput("è«‹è¼¸å…¥ç¬¬äºŒçµ„åº§æ¨™xå€¼:");
+		y2=checkInput("è«‹è¼¸å…¥ç¬¬äºŒçµ„åº§æ¨™yå€¼:");
 		
-		//Âà´«¦¨°}¦CÄæ¦ì 
+		//è½‰æ›æˆé™£åˆ—æ¬„ä½ 
 		r1=x1-1, r2=x2-1, c1=y1-1, c2=y2-1;
 		
 		if(canTwoCoordinateBeRemoved(r1,r2,c1,c2)){
@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
 				arr2d[c2][r2]=0;
 				cout<<"Successful Remove"<<endl;
 			}else{
-				cout<<"¤¤¶¡¦³¤Ó¦hªº»ÙÃªª«µLªk®ø°£³á~"<<endl; 
+				cout<<"ä¸­é–“æœ‰å¤ªå¤šçš„éšœç¤™ç‰©ç„¡æ³•æ¶ˆé™¤å–”~"<<endl; 
 			}
 		}
 		printArray();
@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
 }
 
 void establishAnArray(){
-	//«Ø¥ß¤@­Ó°}¦C¨Ã¥´¶Ã 
+	//å»ºç«‹ä¸€å€‹é™£åˆ—ä¸¦æ‰“äº‚ 
 	int arr[e*e];
 	for(int i=0; i<e*e; i++){
 		arr[i]=i%(e*e/2)+1;
@@ -74,7 +74,7 @@ void establishAnArray(){
 			arr[i]=arr[m];
 			arr[m]=n;
 		}
-		//©ñ¤J¤Gºû°}¦C
+		//æ”¾å…¥äºŒç¶­é™£åˆ—
 		int k=0;
 		for(int i=0; i<e; i++){
 			for(int j=0; j<e; j++){
@@ -102,12 +102,12 @@ int canGameGoOn(){
 	}
 	for(int i=0; i<e; i++){
 	  	for(int j=0; j<e; j++){
-		    k=arr2d[j][i];
+			k=arr2d[j][i];
 			if(A1[k]==99){
-          		B1[k]=j, A1[k]=i;
-    		}else{
-	        	B2[k]=j, A2[k]=i;
-	    	}
+          			B1[k]=j, A1[k]=i;
+    			}else{
+	        		B2[k]=j, A2[k]=i;
+	    		}
 	  	}
 	}
 	for(int l=1; l<=e*e/2; l++){
@@ -140,7 +140,7 @@ int canGameGoOn(){
 		cout<<l<<", eg="<<endgame[l]<<", wg="<<wingame[l]<<endl;
 		#endif
 	}
-	//§PÂ_¹CÀ¸¿éÄ¹ 
+	//åˆ¤æ–·éŠæˆ²è¼¸è´ 
 	int game;
 	game=2;
 	for(int l=1; l<=e*e/2; l++){
@@ -197,27 +197,27 @@ int checkInput(string requirement){
 			check=1;
 			return InputInt;
 		}else{
-			cout<<"¥u¯à¿é¤J¤¶©ó1-6¶¡ªº¾ã¼Æ³á!!!"<<endl;
+			cout<<"åªèƒ½è¼¸å…¥ä»‹æ–¼1-6é–“çš„æ•´æ•¸å–”!!!"<<endl;
 		}
 	}
 }
 
 bool canTwoCoordinateBeRemoved(int r1, int r2, int c1, int c2){
 	if(arr2d[c1][r1]==0 || arr2d[c2][r2]==0){
-		cout<<"½Ğ¤Å­«½Æ¿é¤J¼Æ¦r¤w³Q®ø±¼ªº®y¼Ğ~"<<endl;
+		cout<<"è«‹å‹¿é‡è¤‡è¼¸å…¥æ•¸å­—å·²è¢«æ¶ˆæ‰çš„åº§æ¨™~"<<endl;
 		return false;
 	}else if(r1==r2 && c1==c2){
-		cout<<"½Ğ¿é¤J¨â¤£¦P®y¼Ğ~"<<endl;
+		cout<<"è«‹è¼¸å…¥å…©ä¸åŒåº§æ¨™~"<<endl;
 		return false;
 	}else if(arr2d[c1][r1]!=arr2d[c2][r2]){
-		cout<<"¥u¯à®ø°£¬Û¦Pªº¼Æ¦r³á~"<<endl;
+		cout<<"åªèƒ½æ¶ˆé™¤ç›¸åŒçš„æ•¸å­—å–”~"<<endl;
 		return false;
 	}else{
 		return true;
 	}
 }
 
-//¨â¼Æ¦r¬ÛÁ{ or ¦b¦P¤@ª½½u¤W 
+//å…©æ•¸å­—ç›¸è‡¨ or åœ¨åŒä¸€ç›´ç·šä¸Š 
 bool checkLine(int r1, int r2, int c1, int c2){
 	int checkline=0;
 	int m, n;
@@ -255,7 +255,7 @@ bool checkLine(int r1, int r2, int c1, int c2){
 	return false;
 }
 
-//Âà¤@­ÓÅs
+//è½‰ä¸€å€‹å½
 bool checkCorner(int r1, int r2, int c1, int c2){
 	int crr=1, ccr=1, crl=1, ccl=1; 
 	int m, n;
